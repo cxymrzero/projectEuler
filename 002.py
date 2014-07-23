@@ -1,4 +1,4 @@
-#! usr/bin/env python
+#!/usr/bin/env python
 
 lst = [1, 1]
 sum = 0
