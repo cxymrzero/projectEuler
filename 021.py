@@ -1,28 +1,26 @@
-limit = 20
-cache = [0] * limit # Use cache to save the caculated answers
-#cache[i] stores d(i+1)!
+# Brute force, tried cache the counted nums but failed :(
+import time
+start = time.time()
+
+limit = 10000
 
 def d(n):
-    s = 0 
-    for i in reversed(xrange(n-1)):
-        if n % (i+1) == 0:
-            if cache[i]!=0:
-                return s + i+1 #here the num is i+1
-            else:
-                s += i+1
+    s = 0
+    for i in xrange(1, n):
+        if n%i == 0:
+            s += i
     return s
 
-# d(0) = d(1) = 0
-cache[1] = 1 # d(2) = 1
-for i in xrange(limit):
-    if i<3: continue #cache[0->1] is known
-    cache[i-1] = d(i)
+divSum = []
+for i in xrange(1, limit+1):
+    divSum.append(d(i))
 
-res = []
+res = 0
 for i in xrange(limit):
-    if cache[i] == cache[cache[i]]:
-        res.append(i+1)
-        print cache[i]
+    sum_i = divSum[i]
+    if sum_i<=limit and sum_i>0 and i+1==divSum[sum_i-1] and i!=sum_i-1:
+        res += i+1
 
-print res
-print d(3)
+elapsed = time.time() - start
+
+print "%s found in %s seconds" % (res, elapsed)
